@@ -6,41 +6,57 @@ import '../App.css';
 const HomePage = () => {
   const [roomName, setRoomName] = useState('');
   const [roomDesc, setRoomDesc] = useState('');
+  const [roomCreatedBy, setRoomCreatedBy] = useState('Anonymous');
   const [rooms, setRooms] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     getRooms().then(setRooms);
   }, []);
 
   const handleCreateRoom = () => {
-    createRoom(roomName, roomDesc).then((newRoom) => {
+    if (roomName.trim() === '' || roomDesc.trim() === '') {
+      setError('Room name and description cannot be empty');
+      return;
+    }
+
+    createRoom(roomName, roomDesc, roomCreatedBy).then((newRoom) => {
       setRooms([...rooms, newRoom]);
       setRoomName('');
       setRoomDesc('');
+      setRoomCreatedBy('Anonymous');
+      setError('');
     });
   };
 
   return (
     <div className="container">
-      <h1>Chat Application</h1>
-      <input
-        type="text"
-        value={roomName}
-        onChange={(e) => setRoomName(e.target.value)}
-      />
-      <input
-        type="text"
-        value={roomDesc}
-        onChange={(e) => setRoomDesc(e.target.value)}
-      />
-      <br></br>
-      <button onClick={handleCreateRoom}>Create New Room</button>
-      <br></br>
-      <ul>
+      <h1>Chat Rooms</h1>
+      <div className="create-room">
+      
+        <label htmlFor="roomName">Room Name:</label>
+        <input
+          type="text"
+          value={roomName}
+          onChange={(e) => setRoomName(e.target.value)}
+        />
+        <label htmlFor="roomDesc">Room Description:</label>
+        <input
+          type="text"
+          value={roomDesc}
+          onChange={(e) => setRoomDesc(e.target.value)}
+        />
+        <button onClick={handleCreateRoom}>Create New Room</button>
+        {error && <p className="error">{error}</p>}
+      </div>
+      <ul className="room-list">
         {rooms.map((room) => (
-          <li key={room._id}>
-            <h2><Link to={`/rooms/${room._id}`}>{room.name}</Link></h2>
-            <h4>{room.description}</h4>
+          <li key={room._id} className="room-item">
+            <Link to={`/rooms/${room._id}`} className="room-link">
+            <h2>{room.name}</h2>
+            </Link>
+            <p>{room.description}</p>
+            <p>Created by {room.createdBy} at {new Date(room.createdAt).toLocaleString()}</p>
           </li>
         ))}
       </ul>

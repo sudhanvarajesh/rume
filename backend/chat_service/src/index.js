@@ -20,20 +20,32 @@ app.use(cors()); // Ensure CORS settings allow requests from your frontend
 app.use(express.json());
 app.use('/api', chatRoutes);
 
+
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
+  const activeUsers = {};
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.on('joinRoom', (roomId) => {
+  socket.on('joinRoom', (roomId, username) => {
     socket.join(roomId);
+    if (!activeUsers[roomId]) {
+      activeUsers[roomId] = [];
+    }
+    activeUsers[roomId].push(socket.id);
+    io.to(roomId).emit('activeUsers', activeUsers[roomId]);
     console.log(`User joined room: ${roomId}`);
   });
 
-  socket.on('leaveRoom', (roomId) => {
+  socket.on('leaveRoom', (roomId, username) => {
     socket.leave(roomId);
+    if (activeUsers[roomId]) {
+      activeUsers[roomId] = activeUsers[roomId].filter(user => user !== socket.id);
+      io.to(roomId).emit('activeUsers', activeUsers[roomId]);
+    }
     console.log(`User left room: ${roomId}`);
   });
 
@@ -44,6 +56,10 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
+    for (const roomId in activeUsers) {
+      activeUsers[roomId] = activeUsers[roomId].filter(id => id !== socket.id);
+      io.to(roomId).emit('activeUsers', activeUsers[roomId]);
+    }
   });
 });
 

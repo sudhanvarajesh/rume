@@ -1,14 +1,23 @@
 const Room = require('../models/Room');
 
+
 exports.getRooms = async (req, res) => {
-  const rooms = await Room.find();
-  res.json(rooms);
+  try {
+    const rooms = await Room.find();
+    res.json(rooms);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching rooms', error });
+  }
 };
 
 exports.createRoom = async (req, res) => {
-  const room = new Room(req.body);
-  await room.save();
-  res.status(201).json(room);
+  try {
+    const room = new Room(req.body);
+    await room.save();
+    res.status(201).json(room);
+  } catch (error) {
+    res.status(500).json({ message: 'Error creating room', error });
+  }
 };
 
 exports.getRoomById = async (req, res) => {

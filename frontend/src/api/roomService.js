@@ -4,9 +4,9 @@ const API_URL = process.env.REACT_APP_ROOM_API_URL || 'http://localhost:8083';
 console.log(API_URL);
  // Make sure this matches your Docker setup
 
-export const createRoom = async (roomName, roomDesc) => {
+export const createRoom = async (roomName, roomDesc, roomCreatedBy) => {
   try {
-    const response = await axios.post(`${API_URL}/api/rooms`, { name: roomName, description: roomDesc });
+    const response = await axios.post(`${API_URL}/api/rooms`, { name: roomName, description: roomDesc, createdBy: roomCreatedBy});
     return response.data;
   } catch (error) {
     console.error('Failed to create room', error.message);

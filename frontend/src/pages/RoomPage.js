@@ -10,13 +10,14 @@ const RoomPage = () => {
   const { socket } = useChat();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
-  const [roomName, setRoomName] = useState('');  
+  const [roomName, setRoomName] = useState('');
   const messagesEndRef = useRef(null);
+  const [activeUsers, setActiveUsers] = useState([]);
 
   useEffect(() => {
     const fetchRoomDetails = async () => {
       const room = await getRoomById(roomId);
-      setRoomName(room.name); 
+      setRoomName(room.name);
     };
 
     fetchRoomDetails();
@@ -30,8 +31,13 @@ const RoomPage = () => {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       });
 
+      socket.on('activeUsers', (users) => {
+        setActiveUsers(users);
+      });
+
       return () => {
         socket.off('message');
+        socket.off('activeUsers');
         socket.emit('leaveRoom', roomId);
       };
     }
@@ -56,7 +62,7 @@ const RoomPage = () => {
 
   return (
     <div className="container chat-container">
-      <h1>{roomName}</h1> 
+      <h1>{roomName}</h1>
       <div className="chat-messages">
         {messages.map((msg, index) => (
           <div key={index}>
@@ -65,13 +71,21 @@ const RoomPage = () => {
         ))}
         <div ref={messagesEndRef} />
       </div>
+      <div className="users">
+        <h3>Active Users</h3>
+        <ul>
+          {activeUsers.map((user, index) => (
+            <li key={index}>{user}</li>
+          ))}
+        </ul>
+      </div>
       <div className="chat-input">
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={handleSendMessage}>Send</button>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button onClick={handleSendMessage}>Send</button>
       </div>
     </div>
   );

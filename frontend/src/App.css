@@ -17,12 +17,10 @@ h1 {
 }
 
 .container {
-  width: 80%;
-  max-width: 1200px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
+  position: relative;
 }
 
 input[type="text"] {
@@ -93,4 +91,86 @@ li {
 
 .chat-input button:hover {
   background-color: #0056b3;
+}
+
+.users {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.users ul {
+  list-style: none;
+  padding: 0;
+}
+
+.users li {
+  margin-bottom: 5px;
+}
+
+
+.create-room {
+  width: calc(100% - 40px);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.create-room input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.create-room button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.create-room button:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+}
+
+.room-list {
+  margin-top: 20px; /* Add margin to create space below the .create-room section */
+  overflow-y: auto; /* Enable scrolling for the room list */
+  max-height: calc(100vh - 80px); /* Adjust the maximum height of the room list to fit the remaining viewport height */
+  padding-top: 20px; /* Ensure the rooms list starts below the create-room section */
+}
+
+.room-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.room-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.room-link h2 {
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.room-link p {
+  margin: 0.5em 0;
+}
+
+.room-link p:last-child {
+  font-size: 0.75em;
+  color: #888;
 }
