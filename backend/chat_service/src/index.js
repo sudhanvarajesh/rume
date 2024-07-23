@@ -32,6 +32,11 @@ io.on('connection', (socket) => {
     console.log(`User joined room: ${roomId}`);
   });
 
+  socket.on('leaveRoom', (roomId) => {
+    socket.leave(roomId);
+    console.log(`User left room: ${roomId}`);
+  });
+
   socket.on('chatMessage', async (msg) => {
     await chatController.addMessage(msg);
     io.to(msg.roomId).emit('message', msg);

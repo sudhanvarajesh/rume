@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createRoom, getRooms } from '../api/roomService';
 import { Link } from 'react-router-dom';
-import './App.css';
+import '../App.css';
 
 const HomePage = () => {
   const [roomName, setRoomName] = useState('');
@@ -33,12 +33,14 @@ const HomePage = () => {
         value={roomDesc}
         onChange={(e) => setRoomDesc(e.target.value)}
       />
-      <button onClick={handleCreateRoom}>Create Room</button>
+      <br></br>
+      <button onClick={handleCreateRoom}>Create New Room</button>
+      <br></br>
       <ul>
         {rooms.map((room) => (
           <li key={room._id}>
-            <Link to={`/rooms/${room._id}`}>{room.name}</Link>
-            <h2>{room.description}</h2>
+            <h2><Link to={`/rooms/${room._id}`}>{room.name}</Link></h2>
+            <h4>{room.description}</h4>
           </li>
         ))}
       </ul>

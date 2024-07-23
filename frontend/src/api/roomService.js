@@ -25,3 +25,8 @@ export const getRooms = async () => {
     throw error;
   }
 };
+
+export const getRoomById = async (roomId) => { 
+  const response = await axios.get(`${API_URL}/api/rooms/${roomId}`);
+  return response.data;
+};
