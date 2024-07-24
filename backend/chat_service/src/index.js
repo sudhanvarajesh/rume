@@ -25,7 +25,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
-  const activeUsers = {};
+const activeUsers = {};
+
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -35,15 +36,15 @@ io.on('connection', (socket) => {
     if (!activeUsers[roomId]) {
       activeUsers[roomId] = [];
     }
-    activeUsers[roomId].push(socket.id);
+    activeUsers[roomId].push({ socketId: socket.id, user: username });
     io.to(roomId).emit('activeUsers', activeUsers[roomId]);
     console.log(`User joined room: ${roomId}`);
   });
 
-  socket.on('leaveRoom', (roomId, username) => {
+  socket.on('leaveRoom', (roomId) => {
     socket.leave(roomId);
     if (activeUsers[roomId]) {
-      activeUsers[roomId] = activeUsers[roomId].filter(user => user !== socket.id);
+      activeUsers[roomId] = activeUsers[roomId].filter(user => user.socketId !== socket.id);
       io.to(roomId).emit('activeUsers', activeUsers[roomId]);
     }
     console.log(`User left room: ${roomId}`);
@@ -57,7 +58,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
     for (const roomId in activeUsers) {
-      activeUsers[roomId] = activeUsers[roomId].filter(id => id !== socket.id);
+      activeUsers[roomId] = activeUsers[roomId].filter(user => user.socketId !== socket.id);
       io.to(roomId).emit('activeUsers', activeUsers[roomId]);
     }
   });

@@ -13,6 +13,7 @@ const RoomPage = () => {
   const [roomName, setRoomName] = useState('');
   const messagesEndRef = useRef(null);
   const [activeUsers, setActiveUsers] = useState([]);
+  const username = 'Anonymous';
 
   useEffect(() => {
     const fetchRoomDetails = async () => {
@@ -25,7 +26,7 @@ const RoomPage = () => {
     getMessages(roomId).then(setMessages);
 
     if (socket) {
-      socket.emit('joinRoom', roomId);
+      socket.emit('joinRoom', roomId, username);
 
       socket.on('message', (newMessage) => {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -52,7 +53,7 @@ const RoomPage = () => {
     if (message.trim() !== '') {
       const msg = {
         roomId,
-        user: 'Anonymous', 
+        user: username, 
         message,
       };
       socket.emit('chatMessage', msg);
@@ -75,7 +76,7 @@ const RoomPage = () => {
         <h3>Active Users</h3>
         <ul>
           {activeUsers.map((user, index) => (
-            <li key={index}>{user}</li>
+            <li key={index}>{user.user}</li>
           ))}
         </ul>
       </div>
