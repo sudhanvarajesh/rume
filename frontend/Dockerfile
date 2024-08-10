@@ -1,18 +1,25 @@
-# Use the official Node.js image
+# Base image
 FROM node:16
 
 # Create and change to the app directory
 WORKDIR /app
 
 # Copy application dependency manifests to the container image
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json ./
 
-# Install dependencies
+# Install production dependencies.
 RUN npm install
 
-# Copy local code to the container image
+# Copy local code to the container image.
 COPY . .
 
-# Expose port 3000 and start the app
+# Build the React application
+RUN npm run build
+
+# Install `serve` to serve the app on container startup
+RUN npm install -g serve
+
+# Configure the container to run in an executed manner
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]

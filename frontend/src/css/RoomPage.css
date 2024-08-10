@@ -1,0 +1,118 @@
+/* General container styling */
+.room-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Room title styling */
+.room-page-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Main content container for users and chat */
+.room-page-content {
+    display: flex;
+    flex-direction: row;
+    height: calc(100% - 40px);
+}
+
+/* Active users list styling */
+.room-page-users {
+    width: 30%;
+    padding-right: 20px;
+    overflow-y: auto;
+}
+
+.room-page-users-title {
+    margin-bottom: 10px;
+}
+
+.room-page-users-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.room-page-user-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Chat container styling */
+.room-page-chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+/* Chat messages box styling */
+.room-page-chat-messages {
+    display: flex;
+    flex-direction: column;
+    height: 70%; /* Fixed height as requested */
+    padding: 20px;
+    width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+    overflow-y: auto;
+}
+
+/* Message bubble styling */
+.room-page-message-self, .room-page-message-other {
+    display: flex;
+    width: fit-content; /* This ensures that the container only takes as much width as necessary */
+    max-width: 60%; /* Max width for each message */
+    margin: 5px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #ffeb3b; /* Yellow background for messages */
+    word-wrap: break-word;
+}
+
+.room-page-message-self {
+    align-self: flex-end; /* Aligns self messages to the right */
+    background-color: #add8e6; /* Light blue background for own messages */
+}
+
+.room-page-message-other {
+    align-self: flex-start; /* Aligns other messages to the left */
+    background-color: #ffeb3b; /* Keeps yellow background for other messages */
+}
+
+
+/* Chat input area styling */
+.room-page-chat-input-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+.room-page-input-field {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.room-page-send-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.room-page-send-button:hover {
+    background-color: #0056b3;
+}

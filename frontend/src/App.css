@@ -1,176 +1,80 @@
-/* App.css */
-
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f5f5f5;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
-
 .container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  position: relative;
-}
-
-input[type="text"] {
-  width: calc(50% - 10px);
-  padding: 10px;
-  margin: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin: 10px 0;
-  padding: 10px;
-  background-color: #f1f1f1;
-  border-radius: 4px;
-}
-
-.chat-container {
   display: flex;
   flex-direction: column;
-  height: 80vh;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #fffde7; /* Light yellow background */
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
 }
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 20px;
-}
-
-.chat-input {
-  display: flex;
-}
-
-.chat-input input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
-}
-
-.chat-input button {
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
-}
-
-.chat-input button:hover {
-  background-color: #0056b3;
-}
-
-.users {
-  flex: 1;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
-
-.users ul {
-  list-style: none;
-  padding: 0;
-}
-
-.users li {
-  margin-bottom: 5px;
-}
-
 
 .create-room {
-  width: calc(100% - 40px);
-  background: white;
+  background-color: #ffffff;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.create-room label {
+  margin-right: 10px;
+  color: #666666;
 }
 
 .create-room input {
-  display: block;
-  width: 100%;
+  margin: 5px 0;
   padding: 10px;
-  margin-bottom: 10px;
-  box-sizing: border-box;
+  width: calc(100% - 22px); /* Adjusting for padding */
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .create-room button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: #4CAF50;
-  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #fdd835; /* Yellow background */
   border: none;
+  border-radius: 30px;
+  color: #333;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .create-room button:hover {
-  background-color: #45a049;
+  background-color: #fffde7;
+  color: #fdd835;
 }
 
 .error {
   color: red;
+  margin-top: 10px;
 }
 
 .room-list {
-  margin-top: 20px; /* Add margin to create space below the .create-room section */
-  overflow-y: auto; /* Enable scrolling for the room list */
-  max-height: calc(100vh - 80px); /* Adjust the maximum height of the room list to fit the remaining viewport height */
-  padding-top: 20px; /* Ensure the rooms list starts below the create-room section */
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
 }
 
 .room-item {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.room-link {
-  text-decoration: none;
-  color: inherit;
+  background-color: #ffffff;
+  margin-top: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .room-link h2 {
-  font-size: 1.5em;
   margin: 0;
+  color: #333333;
+  text-decoration: none;
 }
 
-.room-link p {
-  margin: 0.5em 0;
-}
-
-.room-link p:last-child {
-  font-size: 0.75em;
-  color: #888;
+.room-item p {
+  color: #666666;
+  margin: 5px 0;
 }

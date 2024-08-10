@@ -13,12 +13,24 @@ services:
       - "8083:8083"
     environment:
       - MONGO_URI=${MONGO_URI}
-  
+
+  user-service:
+    build: ./backend/user_service
+    ports:
+      - "8081:3000"
+    environment:
+      - MONGO_URI=${MONGO_URI}
+
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Map port 3000 on the host to port 80 in the container
+    depends_on:
+      - chat-service
+      - room-service
+      - user-service
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_ROOM_API_URL=http://localhost:8083
-      - REACT_APP_API_URL = http://localhost:8082
+    - CHOKIDAR_USEPOLLING=true
+    - REACT_APP_ROOM_API_URL=http://room-service:8083
+    - REACT_APP_API_URL=http://chat-service:8082
+    - REACT_APP_USER_API_URL=http://user-service:3000
