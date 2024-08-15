@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../css/LandingPage.css'; // Assuming you will place the CSS in a separate file
 
 const LandingPage = () => {
+  console.log('LandingPage rendered');
   return (
     <div className="landing-container">
       <div className="landing-content">

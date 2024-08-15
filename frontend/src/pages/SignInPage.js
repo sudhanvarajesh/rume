@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// SignInPage.js
+import React, { useContext, useState } from 'react';
+import { useNavigate} from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
+import '../css/SignInPage.css';
 import axios from 'axios';
-import '../css/SignInPage.css'; // Import the CSS file if you're using a separate file
 
 const SignInPage = () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(''); 
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/auth/signin', { username, password });
-      if (response.status === 200) {
-        navigate('/home');
-      }
-    } catch (error) {
+    const response = await axios.post('/api/auth/signin', { username, password });
+    if (response.status === 200) {
+      localStorage.setItem('user', JSON.stringify({ username, password }));
+      setUser({ username, password });
+      navigate('/home'); // Redirect to homepage
+    }
+    else{
       setError('Failed to sign in. Please check your credentials.');
     }
   };

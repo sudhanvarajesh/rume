@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { useNavigate} from 'react-router-dom';  
 import '../css/SignUpPage.css'; // Import the CSS file if you're using a separate file
+import axios from 'axios';
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8081/api/auth/signup', { username, password });
-      if (response.status === 201) {
-        navigate('/home');
-      }
+      const res = await axios.post('/api/auth/signup', {username, password});
+      navigate('/');
     } catch (error) {
       console.error(error);
       setError('Failed to sign up. Username might be already taken.');

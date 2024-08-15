@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useChat } from '../contexts/ChatContext';
+import { useUser } from '../contexts/UserContext';
 import { getMessages } from '../api/chatService';
 import { getRoomById } from '../api/roomService';
 import '../App.css';
@@ -8,14 +9,19 @@ import '../App.css';
 const RoomPage = () => {
   const { roomId } = useParams();
   const { socket } = useChat();
+  const { user } = useUser();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
   const [roomName, setRoomName] = useState('');
   const messagesEndRef = useRef(null);
   const [activeUsers, setActiveUsers] = useState([]);
-  const username = 'Anonymous';
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
+    if (user===null){
+      navigate('/'); // Redirect to homepage
+    }
     const fetchRoomDetails = async () => {
       const room = await getRoomById(roomId);
       setRoomName(room.name);
@@ -26,7 +32,7 @@ const RoomPage = () => {
     getMessages(roomId).then(setMessages);
 
     if (socket) {
-      socket.emit('joinRoom', roomId, username);
+      socket.emit('joinRoom', roomId, user.username);
 
       socket.on('message', (newMessage) => {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -53,7 +59,7 @@ const RoomPage = () => {
     if (message.trim() !== '') {
       const msg = {
         roomId,
-        user: username, 
+        user: user.username, 
         message,
       };
       socket.emit('chatMessage', msg);

@@ -3,6 +3,7 @@ const express = require('express');
 const passport = require('passport');
 const User = require('../models/User');
 const router = express.Router();
+require('dotenv').config();
 
 router.post('/signup', async (req, res) => {
   const { username, password } = req.body;
@@ -19,9 +20,22 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-
-router.post('/signin', passport.authenticate('local'), (req, res) => {
-  res.json({ message: 'Authenticated successfully', user: req.user });
+router.post('/signin', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({ message: 'Authentication failed', info });
+    }
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        return res.status(500).json({ message: err.message });
+      }
+      return res.json(user);
+    });
+  })(req, res, next);
 });
 
+
 module.exports = router;
+
+
+

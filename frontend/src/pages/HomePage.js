@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { createRoom, getRooms } from '../api/roomService';
-import { Link } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
+import { Link, useNavigate } from 'react-router-dom';
 import '../App.css';
 
 const HomePage = () => {
   const [roomName, setRoomName] = useState('');
   const [roomDesc, setRoomDesc] = useState('');
-  const [roomCreatedBy, setRoomCreatedBy] = useState('Anonymous');
+  const [roomCreatedBy, setRoomCreatedBy] = useState('');
   const [rooms, setRooms] = useState([]);
   const [error, setError] = useState('');
+  const { user } = useUser();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
+    if (user===null){
+      navigate('/'); // Redirect to homepage
+    }
     getRooms().then(setRooms);
   }, []);
+
 
   const handleCreateRoom = () => {
     if (roomName.trim() === '' || roomDesc.trim() === '') {
@@ -20,11 +28,11 @@ const HomePage = () => {
       return;
     }
 
-    createRoom(roomName, roomDesc, roomCreatedBy).then((newRoom) => {
+    createRoom(roomName, roomDesc, user.username).then((newRoom) => {
       setRooms([...rooms, newRoom]);
       setRoomName('');
       setRoomDesc('');
-      setRoomCreatedBy('Anonymous');
+      setRoomCreatedBy('');
       setError('');
     });
   };
@@ -32,6 +40,7 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Chat Rooms</h1>
+      {user && <h2>Welcome, {user.username}!</h2>}
       <div className="create-room">
       
         <label htmlFor="roomName">Room Name:</label>
