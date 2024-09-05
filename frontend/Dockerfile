@@ -1,6 +1,9 @@
 # Base image
 FROM node:16
 
+ENV PORT=3000
+
+
 # Create and change to the app directory
 WORKDIR /app
 
@@ -23,3 +26,4 @@ RUN npm install -g serve
 # Configure the container to run in an executed manner
 EXPOSE 3000
 CMD ["serve", "-s", "build", "-l", "3000"]
+

@@ -5,21 +5,21 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=mongodb+srv://sudhanva0001:MUmwEw5liHQuOcqd@rume-db.qiefvt9.mongodb.net/?retryWrites=true&w=majority&appName=rume-db
 
   room-service:
     build: ./backend/room_service
     ports:
       - "8083:8083"
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=mongodb+srv://sudhanva0001:MUmwEw5liHQuOcqd@rume-db.qiefvt9.mongodb.net/?retryWrites=true&w=majority&appName=rume-db
 
   user-service:
     build: ./backend/user_service
     ports:
       - "8081:3000"
     environment:
-      - MONGO_URI=${MONGO_URI}
+      - MONGO_URI=mongodb+srv://sudhanva0001:MUmwEw5liHQuOcqd@rume-db.qiefvt9.mongodb.net/?retryWrites=true&w=majority&appName=rume-db
 
   frontend:
     build: ./frontend
@@ -32,5 +32,5 @@ services:
     environment:
     - CHOKIDAR_USEPOLLING=true
     - REACT_APP_ROOM_API_URL=http://room-service:8083
-    - REACT_APP_API_URL=http://chat-service:8082
+    - REACT_APP_CHAT_API_URL=http://chat-service:8082
     - REACT_APP_USER_API_URL=http://user-service:3000

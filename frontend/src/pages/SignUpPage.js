@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate} from 'react-router-dom';  
 import '../css/SignUpPage.css'; // Import the CSS file if you're using a separate file
 import axios from 'axios';
+const API_URL = 'http://localhost:8081'; 
 
 const SignUpPage = () => {
   const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ const SignUpPage = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/auth/signup', {username, password});
+      const res = await axios.post('http://localhost:8081/api/auth/signup', {username, password});
       navigate('/');
     } catch (error) {
       console.error(error);

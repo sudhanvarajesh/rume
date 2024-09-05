@@ -17,10 +17,10 @@ app.use(passport.session());
 
 app.use('/api/auth', authRoutes);
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`${process.env.MONGO_URI}`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
 
-const PORT = process.env.PORT || 3000;
+const PORT = 8081;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

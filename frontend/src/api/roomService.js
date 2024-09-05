@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_ROOM_API_URL || 'http://localhost:8083'; 
+const API_URL = 'http://ec2-13-59-204-174.us-east-2.compute.amazonaws.com'; 
 console.log(API_URL);
  // Make sure this matches your Docker setup
 
